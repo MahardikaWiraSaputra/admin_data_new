@@ -1,0 +1,25 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class M_data_dasar_elemen extends CI_Model{
+
+    function get_indikator($id){
+        $this->db->select('a.INDIKATOR, a.ID, b.BIDANG_URUSAN, c.URUSAN');
+        $this->db->from('t_dt_dasar_indikator AS a');
+        $this->db->join('m_bidang_urusan AS b','a.BIDANG_ID = b.ID','INNER');
+        $this->db->join('m_urusan AS c','b.URUSAN_ID = c.ID','INNER');
+        $this->db->where('a.ID', $id);
+        return $this->db->get();
+    }
+
+    function tambah_elemen($data) {
+        $query = $this->db->insert('t_dt_dasar_elemen', $data);
+        if ($query) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+}
